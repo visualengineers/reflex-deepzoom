@@ -1,0 +1,96 @@
+<UserControl x:Class="ReFlex.Apps.DeepZoom.Views.InfoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mvvm="http://prismlibrary.com/"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:ReFlex.Apps.DeepZoom.ViewModels"
+             mc:Ignorable="d"
+             mvvm:ViewModelLocator.AutoWireViewModel="True"
+             d:DesignHeight="800" d:DesignWidth="600"
+             d:DataContext="{d:DesignInstance viewModels:InfoViewModel}">
+    <Border 
+        Background="#333" Opacity="0.9"
+        BorderBrush="#d5681c" BorderThickness="1" CornerRadius="5"
+        Width="450" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0, 50, 50, 50">
+    <ScrollViewer>
+        <StackPanel Style="{StaticResource InformationPanel}">
+            <TextBlock Style="{StaticResource HeadingStyle1}" Text="{Binding ProgramName}"/>
+            <TextBlock Style="{StaticResource SubHeadingStyle}" Text="{Binding ProgramVersion}"/>
+            <StackPanel Margin="20,10, 20, 10">
+               <TextBlock Style="{StaticResource InfoText}" Text="{Binding ProgramCompany}"/>
+               <TextBlock Style="{StaticResource InfoText}" Text="{Binding ProgramCopyright}"/> 
+            </StackPanel>
+            
+            <TextBlock Style="{StaticResource HeadingStyle2}">KeyBindings</TextBlock>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">F1</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}">DirectPanning with Lens</TextBlock>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">F2</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}">DirectPanning without Lens</TextBlock>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">F3</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}">JoystickPanning with Lens</TextBlock>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">F4</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}">JoystickPanning without Lens</TextBlock>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">E</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}">Exponential Mapping</TextBlock>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">L</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}">Logarithmic Mapping</TextBlock>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">N</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}">Next Visualization</TextBlock>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">B</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}">Previous Visualization</TextBlock>
+            </StackPanel>
+            
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">D</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}">Toggle Debug View</TextBlock>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">H</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}">Toggle help</TextBlock>
+            </StackPanel>
+            
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">F</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}">FullScreen</TextBlock>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">Alt + Enter</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}">FullScreen</TextBlock>
+            </StackPanel>
+            
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">Escape</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}">Quit Application</TextBlock>
+            </StackPanel>
+            
+            <TextBlock Style="{StaticResource HeadingStyle2}">Referenced Assemblies</TextBlock>
+            <ItemsControl ItemsSource="{Binding ReferencedAssemblies}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Style="{StaticResource PropertyItem}">
+                            <TextBlock Style="{StaticResource TableColumnStyleWide}" Text="{Binding Name}"/>
+                            <TextBlock Style="{StaticResource TableColumnStyleBold}" Text="{Binding Version}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </ScrollViewer>
+    </Border>
+</UserControl>

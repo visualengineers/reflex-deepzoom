@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ReFlex.Apps.DeepZoom.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ScaleMultiplicator" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">0.8</Value>
+    </Setting>
+    <Setting Name="LensRadius" Type="System.Double" Scope="Application">
+      <Value Profile="(Default)">150</Value>
+    </Setting>
+    <Setting Name="MotionThreshold" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="SecondsUntilPanMode" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="MotionThresholdXY" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">50</Value>
+    </Setting>
+    <Setting Name="MotionThresholdZ" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="Acceleration" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">100</Value>
+    </Setting>
+    <Setting Name="Address" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ws://localhost</Value>
+    </Setting>
+    <Setting Name="Port" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">40001</Value>
+    </Setting>
+    <Setting Name="EndPoint" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ReFlex</Value>
+    </Setting>
+    <Setting Name="LensShape" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="LensBorderColor" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">Coral</Value>
+    </Setting>
+    <Setting Name="LensBorderWidth" Type="System.Double" Scope="Application">
+      <Value Profile="(Default)">3</Value>
+    </Setting>
+    <Setting Name="LensOffset" Type="System.Drawing.Size" Scope="Application">
+      <Value Profile="(Default)">200, 125</Value>
+    </Setting>
+    <Setting Name="SendDiagnosticData" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="DiagnosticsAddress" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost:4302/log/appData</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
+

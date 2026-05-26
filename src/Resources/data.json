@@ -1,0 +1,22 @@
+{
+  "imageData": [
+    {
+      "name": "Dresden - Panorama",
+      "basePath": "Resources/Dresden",
+      "imageFullPath": "Dresden_25000x14275.png",
+      "imagePreviewPath": "Dresden_4000x2250.png",
+      "imageOverlayPath": "Dresden_Overlay.png",
+      "isActive": true,
+      "hasOverlay": true
+    },
+    {
+      "name": "Tirol - Panorama Petersköpfl",
+      "basePath": "Resources/Tirol",
+      "imageFullPath": "Panorama_Peterskoepfl_30893x17377.png",
+      "imagePreviewPath": "Panorama_Peterskoepfl_1920x1080.png",
+      "imageOverlayPath": "overlay_Tirol.png",
+      "isActive": true,
+      "hasOverlay": true
+    }
+  ]
+}

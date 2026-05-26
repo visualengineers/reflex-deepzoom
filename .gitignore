@@ -399,3 +399,11 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+src/Resources/*
+
+!src/Resources/deepzoom_title.png
+!src/Resources/deepzoom.ico
+!src/Resources/data.json
+
+/src/.idea

@@ -1,0 +1,166 @@
+﻿<UserControl x:Class="ReFlex.Apps.DeepZoom.Views.DirectPanningWithLenseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mvvm="http://prismlibrary.com/"
+             xmlns:calc="clr-namespace:CalcBinding;assembly=CalcBinding"
+             xmlns:viewModels="clr-namespace:ReFlex.Apps.DeepZoom.ViewModels"
+             xmlns:converter="clr-namespace:ReFlex.Apps.DeepZoom.Converter"
+             xmlns:views="clr-namespace:ReFlex.Apps.DeepZoom.Views"
+             mc:Ignorable="d"
+             mvvm:ViewModelLocator.AutoWireViewModel="True"
+
+             Height="{Binding UserControlHeight, Mode=TwoWay}" 
+             Width="{Binding UserControlWidth, Mode=TwoWay}"
+             d:DataContext="{d:DesignInstance viewModels:DirectPanningWithLenseViewModel}">
+    <UserControl.Resources>
+        <converter:RectangleConverter x:Key="RectangleConverter"/>
+        <Style TargetType="Shape" x:Key="LensBasicStyle">
+            <Setter Property="Stroke" Value="{Binding LensBorderColor}"/>
+            <Setter Property="Visibility" Value="{Binding IsLensVisible, Converter={StaticResource BooleanVisibilityConverter}}"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="RenderTransformOrigin" Value="0,0"/>
+        </Style>
+        
+        <Style TargetType="Shape" x:Key="LensBorderStyle" BasedOn="{StaticResource LensBasicStyle}">
+            <Setter Property="Width" Value="{calc:Binding (LenseRadius * 2.0)}" /> 
+            <Setter Property="Height" Value="{calc:Binding (LenseRadius * 2.0)}"/>
+            <Setter Property="Fill" Value="Transparent"/>
+            <Setter Property="StrokeThickness" Value="{Binding LensBorderWidth }"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <TransformGroup>
+                        <TranslateTransform 
+                            X="{calc:Binding ZoomCenter.X + LensOffset.Width - LenseRadius + AspectRatioOffset.Width}"
+                            Y="{calc:Binding ZoomCenter.Y + LensOffset.Height - LenseRadius + AspectRatioOffset.Height}"/>
+                    </TransformGroup>
+                    </Setter.Value>
+                </Setter>
+        </Style>
+        
+        <Style TargetType="UserControl" x:Key="LensViewStyle">
+            <Setter Property="Width" Value="80" /> 
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="RenderTransformOrigin" Value="0,0"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <TransformGroup>
+                        <TranslateTransform 
+                            X="{calc:Binding ZoomCenter.X + LensOffset.Width + AspectRatioOffset.Width - 40}"
+                            Y="{calc:Binding ZoomCenter.Y + LensOffset.Height + LenseRadius + AspectRatioOffset.Height - LensBorderWidth - 20}" />
+                    </TransformGroup>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style TargetType="Shape" x:Key="LensTouchPointStyle" BasedOn="{StaticResource LensBasicStyle}">
+            <Setter Property="Width" Value="50" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="Fill" Value="#66ffffff" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <TransformGroup>
+                        <TranslateTransform 
+                            X="{calc:Binding ZoomCenter.X - 25 + AspectRatioOffset.Width}"
+                            Y="{calc:Binding ZoomCenter.Y - 25 + AspectRatioOffset.Height}"/>
+                    </TransformGroup>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- clipping path for the lens: circular lens -->
+        <EllipseGeometry x:Key="CircleGeometry"
+                         Center="{Binding ZoomCenter}"
+                         RadiusX="{Binding ScaledLensRadius}"
+                         RadiusY="{Binding ScaledLensRadius}"/>
+        
+        <!-- clipping path for the lens: rectangular lens -->
+        <RectangleGeometry x:Key="RectangleGeometry">
+            <RectangleGeometry.Rect>
+                <MultiBinding Converter="{StaticResource RectangleConverter}">
+                    <Binding Path="ZoomCenter.X"/>
+                    <Binding Path="ZoomCenter.Y"/>
+                    <Binding Path="ScaledLensDiameter"/>
+                    <Binding Path="ScaledLensDiameter"/>
+                    <Binding Path="ScaledLensRadius"/>
+                </MultiBinding>
+            </RectangleGeometry.Rect>
+        </RectangleGeometry>
+        
+        <!-- Style contasining the DataTrigger to switch clip geometries determined by LensShape Property -->
+        <Style TargetType="FrameworkElement" x:Key="ImageClipStyle">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding LensShape}" Value="0">
+                    <Setter Property="Clip" Value="{StaticResource CircleGeometry}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding LensShape}" Value="1">
+                    <Setter Property="Clip" Value="{StaticResource RectangleGeometry}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <!-- Transform for Lens / Overlay -->
+        <TransformGroup x:Key="LensTransform">
+            <ScaleTransform 
+                CenterX="{Binding ZoomCenter.X}"
+                CenterY="{Binding ZoomCenter.Y}"
+                ScaleX="{Binding Scale}"
+                ScaleY="{Binding Scale}"/>
+            <TranslateTransform
+                X="{calc:Binding LensOffset.Width}"
+                Y="{calc:Binding LensOffset.Height}"/>
+        </TransformGroup>
+    </UserControl.Resources>
+    <Grid
+        Background="Black">
+
+        <Image Source="{Binding PreviewSource.Image}" Stretch="Uniform" StretchDirection="Both"/>
+        
+        <!-- lens: touch origin (circle) -->
+        <Ellipse 
+            Style="{StaticResource LensTouchPointStyle}" 
+            Visibility="{Binding ShowCircleLens, Converter={StaticResource BooleanVisibilityConverter}}"/>
+        
+        <!-- lens: touch origin (rectangle) -->
+        <Rectangle 
+            Style="{StaticResource LensTouchPointStyle}" 
+            Visibility="{Binding ShowRectangleLens, Converter={StaticResource BooleanVisibilityConverter}}"/>
+        
+        <!-- lens: zoomfactor (behind lense so that cricle overlays the content rectandle -->
+        <views:LensPropertiesView 
+            Style="{StaticResource LensViewStyle}"
+            Visibility="{Binding IsLensVisible, Converter={StaticResource BooleanVisibilityConverter}}"/>
+        
+        <!-- Lens: zoomed content -->
+        <Image 
+            Style="{StaticResource ImageClipStyle}"
+            Source="{Binding FullImageSource.Image}"
+            Visibility="{Binding IsLensVisible, Converter={StaticResource BooleanVisibilityConverter}}"
+            RenderTransform="{StaticResource LensTransform}"
+            MinWidth="{Binding UserControlWidth}"
+            MinHeight="{Binding UserControlHeight}"/>
+
+        <!-- Lens: overlay image -->
+        <Image 
+            Style="{StaticResource ImageClipStyle}"
+            Source="{Binding ImageSourceOverlay.Image}"
+            Visibility="{Binding IsOverlayVisible, Converter={StaticResource BooleanVisibilityConverter}}" Opacity="{Binding OverlayOpacity}"
+            RenderTransform="{StaticResource LensTransform}"/>
+        
+        <!-- lens: border (circle) -->
+        <Ellipse 
+            Style="{StaticResource LensBorderStyle}"
+            Visibility="{Binding ShowCircleLens, Converter={StaticResource BooleanVisibilityConverter}}"/>
+        
+        <!-- lens: border (rectangle) -->
+        <Rectangle 
+            Style="{StaticResource LensBorderStyle}"
+            Visibility="{Binding ShowRectangleLens, Converter={StaticResource BooleanVisibilityConverter}}"/>
+        
+    </Grid>
+
+</UserControl>

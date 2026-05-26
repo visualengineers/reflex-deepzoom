@@ -1,0 +1,128 @@
+﻿<mah:MetroWindow x:Class="ReFlex.Apps.DeepZoom.Views.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mvvm="http://prismlibrary.com/"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:interactivity="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:viewModels="clr-namespace:ReFlex.Apps.DeepZoom.ViewModels"
+        xmlns:views="clr-namespace:ReFlex.Apps.DeepZoom.Views"
+        mc:Ignorable="d"
+        mvvm:ViewModelLocator.AutoWireViewModel="True"
+        Title="DSense.Gigapixelviewer"
+        Height="{Binding WindowHeight, Mode=TwoWay}" 
+        Width="{Binding WindowWidth, Mode=TwoWay}"
+        WindowStyle="{Binding WindowStyle}"
+        WindowState="{Binding WindowState}"
+        ShowTitleBar="{Binding IsTitleBarVisible}"
+        ShowIconOnTitleBar="{Binding IsTitleBarVisible}"
+        ShowCloseButton="{Binding IsTitleBarVisible}"
+        ShowMaxRestoreButton="{Binding IsTitleBarVisible}"
+        ShowMinButton="{Binding IsTitleBarVisible}"       
+        d:DataContext="{d:DesignInstance viewModels:MainViewModel}"
+        d:DesignHeight="1080"
+        d:DesignWidth="1920">
+
+    <interactivity:Interaction.Triggers>
+        <interactivity:EventTrigger EventName="Loaded">
+            <mvvm:InvokeCommandAction Command="{Binding WindowLoadedCommand}"/>
+        </interactivity:EventTrigger>
+    </interactivity:Interaction.Triggers>
+
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="{Binding TerminateApplicationCommand}"/>
+        <KeyBinding Key="F" Command="{Binding ToggleFullscreenCommand}"/>
+        <KeyBinding Key="E" Command="{Binding ToggleExponentialMappingCommand}"/>
+        <KeyBinding Key="L" Command="{Binding ToggleLogarithmicMappingCommand}"/>
+        <KeyBinding Gesture="Alt+Enter" Command="{Binding ToggleFullscreenCommand}"/>
+        <!-- Modi -->
+        <KeyBinding Key="F1" Command="{Binding ShowView1Command}"/>
+        <KeyBinding Key="F2" Command="{Binding ShowView2Command}"/>
+        <KeyBinding Key="F3" Command="{Binding ShowView3Command}"/>
+        <KeyBinding Key="F4" Command="{Binding ShowView4Command}"/>
+        <!-- Image switching -->
+        <KeyBinding Key="N" Command="{Binding NextImageCommand}"/>
+        <KeyBinding Key="B" Command="{Binding PreviousImageCommand}"/>
+        
+        <!-- ToggleDebug -->
+        <KeyBinding Key="D" Command="{Binding ToggleDebugViewCommand}"/>
+        
+        <KeyBinding Key="H" Command="{Binding ToggleHelpCommand}"/>
+    </Window.InputBindings>
+
+    <Grid>
+        <ContentControl mvvm:RegionManager.RegionName="ContentRegion"/>
+
+        <StackPanel 
+            Orientation="Horizontal">
+
+            <Label
+                Margin="10"
+                Foreground="AliceBlue"
+                Visibility="{Binding IsExponentialMapping, 
+                    Converter={StaticResource BooleanVisibilityConverter}}">
+                Exp
+            </Label>
+
+            <Label
+                Margin="10"
+                Foreground="AliceBlue"
+                Visibility="{Binding IsLogarithmicMapping, 
+                    Converter={StaticResource BooleanVisibilityConverter}}">
+                Log
+            </Label>
+
+        </StackPanel>
+        <Border
+            Visibility="{Binding IsLoadingInProgress, Converter={StaticResource BooleanVisibilityConverter}}">
+            <Border.Background>
+                <ImageBrush ImageSource="{Binding TitleSourceUri}"></ImageBrush>
+            </Border.Background>
+        </Border>
+        <Border 
+            Margin="0,0,0,150"
+            Background="Transparent" 
+            Visibility="{Binding IsLoadingInProgress, Converter={StaticResource BooleanVisibilityConverter}}">
+            <mah:ProgressRing IsActive="{Binding IsLoadingInProgress}" Foreground="#d5681c"/>
+        </Border>
+        <StackPanel 
+            Margin="0,280, 0, 0"
+            Width="500"
+            Height="250"
+            Visibility="{Binding IsLoadingInProgress, Converter={StaticResource BooleanVisibilityConverter}}">
+            <TextBlock Text="{Binding CurrentDataSet.Name}"
+                       Foreground="#999" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Height="50"/>
+            <TextBlock Height="30"
+                       Text="{Binding LoadingStateText}"
+                       Foreground="#d5681c" FontSize="16" FontWeight="Light" HorizontalAlignment="Center"/>
+            <Border
+                Width="320" Height="180"
+                BorderThickness="1"
+                BorderBrush="White"
+                Visibility="{Binding ShowPreviewImage, Converter={StaticResource BooleanVisibilityConverter}}">
+                <Image Stretch="UniformToFill"
+                       Source="{Binding PreviewImage}">
+                </Image>
+            </Border>
+            
+        </StackPanel>
+        
+        <Border Visibility="{Binding ShowDebug, Converter={StaticResource BooleanVisibilityConverter}}">
+            <views:DebugView />
+        </Border>
+        
+        <Border Visibility="{Binding ShowInfo, Converter={StaticResource BooleanVisibilityConverter}}">
+            <views:InfoView />
+        </Border>
+        
+    </Grid>
+
+</mah:MetroWindow>
+
+
+
+
+
+
+

@@ -1,0 +1,129 @@
+<UserControl x:Class="ReFlex.Apps.DeepZoom.Views.DebugView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:calcBinding="clr-namespace:CalcBinding;assembly=CalcBinding"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mvvm="http://prismlibrary.com/"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:ReFlex.Apps.DeepZoom.ViewModels"
+             mc:Ignorable="d"
+             mvvm:ViewModelLocator.AutoWireViewModel="True"
+             d:DesignHeight="800" d:DesignWidth="600"
+             d:DataContext="{d:DesignInstance viewModels:DebugViewModel}">
+    <Border 
+        Background="#333" Opacity="0.9"
+        BorderBrush="#d5681c" BorderThickness="1" CornerRadius="5"
+        Width="500" HorizontalAlignment="left" VerticalAlignment="Top" Margin="50, 50, 50, 50">
+        <StackPanel Style="{StaticResource InformationPanel}">
+            <TextBlock Style="{StaticResource HeadingStyle1}">
+                Debug Info
+            </TextBlock>
+            <TextBlock Style="{StaticResource HeadingStyle2}">Connection Info</TextBlock>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <Ellipse Style="{StaticResource StateVisualizationCircleSuccess}" Visibility="{Binding IsConnected, Converter={StaticResource BooleanVisibilityConverter}}"/>
+                <Ellipse Style="{StaticResource StateVisualizationCircleError}" Visibility="{calcBinding:Binding !IsConnected}"/>
+                <TextBlock Style="{StaticResource TableColumnStyle}" Text="{Binding ConnectionStateMessage}"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">Address</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}" Text="{Binding ConnectionState.Address}"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">Id</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}" Text="{Binding ConnectionState.Id}"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">Frames</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}" Text="{Binding ConnectionState.Frame}"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">Message</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}" Text="{Binding ConnectionState.StateMsg}" TextWrapping="Wrap"/>
+            </StackPanel>
+            <TextBlock Style="{StaticResource HeadingStyle2}">Interaction</TextBlock>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleNarrow}">Id</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyleNarrow}">X</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyleNarrow}">Y</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyleNarrow}">Z</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyleNarrow}">Type</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyleNarrow}">Conf</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}">Extremum</TextBlock>
+            </StackPanel>
+            <Border BorderThickness="0,1,0,2" BorderBrush="#999" Visibility="{Binding IsConnected, Converter={StaticResource BooleanVisibilityConverter}}">
+                <StackPanel Style="{StaticResource PropertyItem}">
+                    <TextBlock Style="{StaticResource TableColumnStyleNarrow}" Text="{Binding CurrentInteraction.TouchId}"/>
+                    <TextBlock Style="{StaticResource TableColumnStyleNarrow}" Text="{Binding CurrentInteraction.Position.X, StringFormat=N2}"/>
+                    <TextBlock Style="{StaticResource TableColumnStyleNarrow}" Text="{Binding CurrentInteraction.Position.Y, StringFormat=N2}"/>
+                    <TextBlock Style="{StaticResource TableColumnStyleNarrow}" Text="{Binding CurrentInteraction.Position.Z, StringFormat=N2}"/>
+                    <TextBlock Style="{StaticResource TableColumnStyleNarrow}" Text="{Binding CurrentInteraction.Type}"/>
+                    <TextBlock Style="{StaticResource TableColumnStyleNarrow}" Text="{Binding CurrentInteraction.Confidence}"/>
+                    <TextBlock Style="{StaticResource TableColumnStyle}" Text="{Binding CurrentInteraction.ExtremumDescription.Type}"/>
+                </StackPanel>
+            </Border>
+            <TextBlock Style="{StaticResource HeadingStyle2}">Status</TextBlock>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">View</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyleWide}" Text="{Binding ViewName}"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">LoadingFinished</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}" Text="{Binding IsLoadingFinished}"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">Loaded Images</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}" Text="{Binding LoadedImages}"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">DataSet</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}" Text="{Binding CurrentDataSet.Name}"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">Has Overlay</TextBlock>
+                <TextBlock Style="{StaticResource TableColumnStyle}" Text="{Binding CurrentDataSet.HasOverlay}"/>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">Images</TextBlock>
+                <StackPanel>
+                   <TextBlock Style="{StaticResource TableColumnStyle}" Text="{Binding CurrentDataSet.ImagePreviewPath}"/> 
+                   <TextBlock Style="{StaticResource TableColumnStyle}" Text="{Binding CurrentDataSet.ImageFullPath}"/> 
+                   <TextBlock Style="{StaticResource TableColumnStyle}" Text="{Binding CurrentDataSet.ImageOverlayPath}"/> 
+                </StackPanel>
+            </StackPanel>
+            <TextBlock Style="{StaticResource HeadingStyle2}">Settings</TextBlock>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">Lens Radius</TextBlock>
+                <TextBlock TextAlignment="Right" Style="{StaticResource TableColumnStyleNarrow}">0</TextBlock>
+                <Slider Width="200" Margin="10,0" Minimum="0" Maximum="500"  
+                        Value="{Binding LensRadius}"/>
+                <TextBlock Style="{StaticResource TableColumnStyleNarrow}">500</TextBlock>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">Lens Offset (X)</TextBlock>
+                <TextBlock TextAlignment="Right" Style="{StaticResource TableColumnStyleNarrow}">0</TextBlock>
+                <Slider Width="200" Margin="10,0" Minimum="0" Maximum="600"  
+                        Value="{Binding LensOffsetX}"/>
+                <TextBlock Style="{StaticResource TableColumnStyleNarrow}">600</TextBlock>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">Lens Offset (Y)</TextBlock>
+                <TextBlock TextAlignment="Right" Style="{StaticResource TableColumnStyleNarrow}">0</TextBlock>
+                <Slider Width="200" Margin="10,0" Minimum="0" Maximum="600"  
+                        Value="{Binding LensOffsetY}"/>
+                <TextBlock Style="{StaticResource TableColumnStyleNarrow}">600</TextBlock>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">Lens Border</TextBlock>
+                <TextBlock TextAlignment="Right" Style="{StaticResource TableColumnStyleNarrow}">0</TextBlock>
+                <Slider Width="200" Margin="10,0" Minimum="0" Maximum="10"  
+                        Value="{Binding LensBorderWidth}"/>
+                <TextBlock Style="{StaticResource TableColumnStyleNarrow}">10</TextBlock>
+            </StackPanel>
+            <StackPanel Style="{StaticResource PropertyItem}">
+                <TextBlock Style="{StaticResource TableColumnStyleBold}">Lens Shape</TextBlock>
+                <ComboBox Width="200" Height="25" Margin="60,0,0,0" ItemsSource="{Binding LensShapes}" SelectedIndex="{Binding SelectedLensShape}"/>
+            </StackPanel>
+        </StackPanel>
+        
+    </Border>
+</UserControl>

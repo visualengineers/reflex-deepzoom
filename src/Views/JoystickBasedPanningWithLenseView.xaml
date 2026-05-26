@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="ReFlex.Apps.DeepZoom.Views.JoystickBasedPanningWithLenseView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mvvm="http://prismlibrary.com/"
+             xmlns:calcBinding="clr-namespace:CalcBinding;assembly=CalcBinding"
+             xmlns:viewModels="clr-namespace:ReFlex.Apps.DeepZoom.ViewModels"
+
+             mc:Ignorable="d"
+             mvvm:ViewModelLocator.AutoWireViewModel="True"
+
+             Height="{Binding UserControlHeight, Mode=TwoWay}" 
+             Width="{Binding UserControlWidth, Mode=TwoWay}"
+             d:DataContext="{d:DesignInstance viewModels:JoystickBasedPanningWithLenseViewModel}">
+
+    <Grid
+        Background="Black">
+
+        <Label
+            Content="{Binding CurrentMode}"
+            Margin="10 40"
+            Foreground="AliceBlue"/>
+
+        <Image Source="{Binding PreviewSource.Image}"/>
+
+        <Image 
+            Source="{Binding FullImageSource.Image}"
+            Visibility="{Binding IsLenseVisible, Converter={StaticResource BooleanVisibilityConverter}}">
+
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform 
+                        CenterX="{calcBinding:Binding ZoomCenter.X}"
+                        CenterY="{calcBinding:Binding ZoomCenter.Y}"
+                        ScaleX="{Binding Scale}"
+                        ScaleY="{Binding Scale}"/>
+                    <TranslateTransform
+                        X="{calcBinding:Binding LenseCenter.X - ZoomCenter.X}"
+                        Y="{calcBinding:Binding LenseCenter.Y - ZoomCenter.Y}"/>
+                </TransformGroup>
+            </Image.RenderTransform>
+
+            <Image.Clip>
+                <EllipseGeometry
+                    Center="{Binding ZoomCenter}"
+                    RadiusX="{calcBinding:Binding LenseRadius / Scale}"
+                    RadiusY="{calcBinding:Binding LenseRadius / Scale}"/>
+            </Image.Clip>
+
+        </Image>
+
+    </Grid>
+
+</UserControl>

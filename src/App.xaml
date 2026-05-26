@@ -1,0 +1,101 @@
+﻿<unity:PrismApplication x:Class="ReFlex.Apps.DeepZoom.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:unity="http://prismlibrary.com/">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/vs/colors.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/themes/dark.blue.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <BooleanToVisibilityConverter x:Key="BooleanVisibilityConverter"/>
+            <Style TargetType="TextBlock" x:Key="HeadingStyle1">
+                <Setter Property="Foreground" Value="#ccc"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="Margin" Value="0,10,0,10"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+            </Style>
+            
+            <Style TargetType="TextBlock" x:Key="SubHeadingStyle">
+                <Setter Property="Foreground" Value="#d5681c"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="Light"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+            </Style>
+            
+            <Style TargetType="TextBlock" x:Key="HeadingStyle2">
+                <Setter Property="Foreground" Value="#d5681c"/>
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="Margin" Value="10,5,0,10"/>
+                <Setter Property="FontWeight" Value="Medium"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+            </Style>
+            
+            <Style TargetType="TextBlock" x:Key="InfoText">
+                <Setter Property="Foreground" Value="#999"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+                <Setter Property="FontWeight" Value="Light"/>
+                <Setter Property="HorizontalAlignment" Value="Center"/>
+                <Setter Property="TextAlignment" Value="Center"/>
+                <Setter Property="FontStyle" Value="Italic"/>
+            </Style>
+            
+            <Style TargetType="TextBlock" x:Key="TableColumnStyle">
+                <Setter Property="Foreground" Value="#ccc"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontWeight" Value="Light"/>
+                <Setter Property="HorizontalAlignment" Value="Left"/>
+            </Style>
+            
+            <Style TargetType="TextBlock" x:Key="TableColumnStyleBold" BasedOn="{StaticResource TableColumnStyle}">
+                <Setter Property="Width" Value="100"/>
+                <Setter Property="FontWeight" Value="Bold"/>
+            </Style>
+           
+            <Style TargetType="TextBlock" x:Key="TableColumnStyleNarrow" BasedOn="{StaticResource TableColumnStyle}">
+                <Setter Property="Width" Value="50"/>
+            </Style>
+            
+            <Style TargetType="TextBlock" x:Key="TableColumnStyleWide" BasedOn="{StaticResource TableColumnStyle}">
+                <Setter Property="Width" Value="270"/>
+            </Style>
+            
+            <Style TargetType="TextBlock" x:Key="TableColumnStyleWideBold" BasedOn="{StaticResource TableColumnStyleBold}">
+                <Setter Property="Width" Value="300"/>
+            </Style>
+            
+            <Style TargetType="StackPanel" x:Key="InformationPanel">
+                <Setter Property="Margin" Value="20"/>
+            </Style>
+            
+            <Style TargetType="StackPanel" x:Key="PropertyItem">
+                <Setter Property="Orientation" Value="Horizontal"/>
+                <Setter Property="Margin" Value="20, 3, 20, 3"/>
+            </Style>
+            
+            <Style TargetType="Ellipse" x:Key="StateVisualizationCircle">
+                <Setter Property="Width" Value="20"/>
+                <Setter Property="Height" Value="20"/>
+                <Setter Property="Margin" Value="0,0, 20, 0"></Setter>
+                <Setter Property="Stroke" Value="#999"/>
+                <Setter Property="StrokeThickness" Value="2"/>
+            </Style>
+            
+            <Style TargetType="Ellipse" x:Key="StateVisualizationCircleSuccess" BasedOn="{StaticResource StateVisualizationCircle}">
+                <Setter Property="Fill" Value="LimeGreen"/>
+            </Style>
+            
+            <Style TargetType="Ellipse" x:Key="StateVisualizationCircleError" BasedOn="{StaticResource StateVisualizationCircle}">
+                <Setter Property="Fill" Value="Red"/>
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+
+</unity:PrismApplication>
