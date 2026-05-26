@@ -407,3 +407,4 @@ src/Resources/*
 !src/Resources/data.json
 
 /src/.idea
+/.idea

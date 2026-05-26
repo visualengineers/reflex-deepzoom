@@ -1,6 +1,6 @@
 # ReFlex DeepZoom
 
-![Logo](design/1024w/app_logo_DeepZoom_orange.png)
+![Logo](design/app_logo_DeepZoom_orange.png)
 
 <!-- omit in toc -->
 
