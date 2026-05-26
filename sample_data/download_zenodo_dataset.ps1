@@ -73,9 +73,20 @@ New-CleanDirectory -Path $workDirectory
 
 try {
     Write-Host "Downloading Zenodo archive..."
-    Invoke-WebRequest -Uri $Url -OutFile $downloadFullPath
+    
+    # disable progress for faster download
+    $oldProgressPreference = $ProgressPreference
+    $ProgressPreference = "SilentlyContinue"
 
-    Write-Host "Extracting outer archive..."
+    try {
+        Invoke-WebRequest -Uri $Url -OutFile $downloadFullPath
+    }
+    finally {
+        # reset progress setting to original value
+        $ProgressPreference = $oldProgressPreference
+    }
+
+    Write-Host "Extracting Zenodo archive..."
     Expand-ArchiveToDirectory -ArchivePath $downloadFullPath -DestinationPath $workDirectory -Force
 
     $nestedArchives = Get-ChildItem -LiteralPath $workDirectory -Filter "*.zip" -File -Recurse |
@@ -106,7 +117,10 @@ finally {
 
     # Remove the temporary root if it is empty.
     if (Test-Path -LiteralPath $downloadDirectory) {
+
+        Write-Host "Cleanup. Remove temporary download directory: $($downloadDirectory)."
         $remainingItems = Get-ChildItem -LiteralPath $downloadDirectory -Force
+
         if ($remainingItems.Count -eq 0) {
             Remove-Item -LiteralPath $downloadDirectory -Force
         }
