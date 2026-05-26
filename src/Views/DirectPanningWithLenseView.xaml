@@ -92,7 +92,7 @@
             </RectangleGeometry.Rect>
         </RectangleGeometry>
         
-        <!-- Style contasining the DataTrigger to switch clip geometries determined by LensShape Property -->
+        <!-- Style containing the DataTrigger to switch clip geometries determined by LensShape Property -->
         <Style TargetType="FrameworkElement" x:Key="ImageClipStyle">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding LensShape}" Value="0">

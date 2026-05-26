@@ -59,6 +59,10 @@ A dataset contains:
 
 So far, only `png` files have been tested as image format.
 
+**IMPORTANT:** The current implementation seems to have trouble with 24-bit png files (even if there is no alpha channel). Therefore, make sure to always use 32-bit png files. 
+Additionally, Photoshop stores pngs as 24-bit files by default. One way to 'force' PS to save an image as 32-bit png is to add an empty layer mask to tha background layer and choose 
+`File` --> `Export` --> `Quick-Export as png`
+
 Datasets are specified in the `data.json` file placed in `src/Resources`
 
 The format for a dataset looks as follows:
@@ -88,7 +92,6 @@ This translates to the following maximum image dimensions (assuming an aspect ra
 | Format | Bit Depth | Width    | Height   |
 | ------ | --------- | -------- | -------- |
 | RGBA   | 32 Bit    | 30893 px | 17377 px |
-| RGB    | 24 Bit    | 35673 px | 20066 px |
 
 ## Overlay
 
