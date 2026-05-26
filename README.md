@@ -9,25 +9,31 @@
 1. [Table of contents](#table-of-contents)
 2. [Introduction](#introduction)
 3. [System Requirements](#system-requirements)
-4. [Keyboard Shortcuts](#keyboard-shortcuts)
-5. [Custom Datasets](#custom-datasets)
-6. [Maximum image size](#maximum-image-size)
-7. [Overlay](#overlay)
-8. [Debug / Settings Panel](#debug--settings-panel)
-9. [Info Panel](#info-panel)
-10. [Loading Screen](#loading-screen)
+4. [Sample Data](#sample-data)
+5. [Keyboard Shortcuts](#keyboard-shortcuts)
+6. [Custom Datasets](#custom-datasets)
+7. [Maximum image size](#maximum-image-size)
+8. [Overlay](#overlay)
+9. [Debug / Settings Panel](#debug--settings-panel)
+10. [Info Panel](#info-panel)
+11. [Loading Screen](#loading-screen)
 
 ![Title Image](documentation/img/screen_dresden.jpg)
 
 ## Introduction
 
-**ReFlex DeepZoom** is a .NET/WPF application demonstrating interaction concepts for _Elastic Displays_ for GigaPixel zoom images using the [ReFlex Framework](https://github.com/visualengineers/reflex)
+**ReFlex DeepZoom** is a .NET/WPF application demonstrating interaction concepts for _Elastic Displays_ for GigaPixel zoom images using the [ReFlex Framework][reflex-url]
 
 ## System Requirements
 
 * OS: Windows 10
 * .NET Core 8.0
 * 16 GB of RAM
+
+## Sample Data
+
+Download Sample data from [Zenodo][zenodo-archive] and place the images in the `src/Resources` directory.
+There is an PowerShell script in `sample_data` which automates this process, start it by executing `download_zenodo_dataset.ps1 -Overwrite`.
 
 ## Keyboard Shortcuts
 
@@ -75,7 +81,7 @@ The format for a dataset looks as follows:
 
 in the current implementation, all image data is loaded into a byte array by using `Windows.Media.Imaging.BitmapSource`. For byte one-dimensional byte arrays there is a size limitation in.NET (regardless of using x64 a Platform Target or specifying `gcAllowVeryLargeObjects` in `app.config`)
 
-The max size if a byte array, according to the [Microsoft .NET documentation](https://learn.microsoft.com/en-us/dotnet/framework/configure-apps/file-schema/runtime/gcallowverylargeobjects-element#remarks) is `2.147.483.591` bytes.
+The max size if a byte array, according to the [Microsoft .NET documentation][net-doc] is `2.147.483.591` bytes.
 
 This translates to the following maximum image dimensions (assuming an aspect ratio of 16:9):
 
@@ -88,7 +94,7 @@ This translates to the following maximum image dimensions (assuming an aspect ra
 
 The template file for creating overlays is placed in the `Design` subfolder.
 
-For creating the overlay, the gigapixel image is place as backgroudn image. for performance reasons, a reduced resolution of 12000px x 8750px is used.
+For creating the overlay, the gigapixel image is place as background image. For performance reasons, a reduced resolution of 12000px x 8750px is used.
 
 The overlay can be of any size as it is stretched to fit the full size image
 
@@ -103,3 +109,7 @@ The overlay can be of any size as it is stretched to fit the full size image
 ## Loading Screen
 
 ![Title Image](documentation/img/screen_loading.jpg)
+
+[net-doc]: https://learn.microsoft.com/en-us/dotnet/framework/configure-apps/file-schema/runtime/gcallowverylargeobjects-element#remarks
+[reflex-url]: https://github.com/visualengineers/reflex
+[zenodo-archive]: https://zenodo.org/records/20393649
